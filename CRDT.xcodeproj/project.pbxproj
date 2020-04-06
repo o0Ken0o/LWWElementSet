@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		396EC369243B5F1C00E147BE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC368243B5F1C00E147BE /* main.swift */; };
+		396EC37C243B5FC300E147BE /* LWWElementSetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,10 +26,20 @@
 /* Begin PBXFileReference section */
 		396EC365243B5F1C00E147BE /* CRDT */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CRDT; sourceTree = BUILT_PRODUCTS_DIR; };
 		396EC368243B5F1C00E147BE /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		396EC373243B5F8100E147BE /* CRDTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRDTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		396EC377243B5F8100E147BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWElementSetTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		396EC362243B5F1C00E147BE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		396EC370243B5F8100E147BE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -42,6 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				396EC367243B5F1C00E147BE /* CRDT */,
+				396EC374243B5F8100E147BE /* CRDTTests */,
 				396EC366243B5F1C00E147BE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				396EC365243B5F1C00E147BE /* CRDT */,
+				396EC373243B5F8100E147BE /* CRDTTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,6 +73,15 @@
 				396EC368243B5F1C00E147BE /* main.swift */,
 			);
 			path = CRDT;
+			sourceTree = "<group>";
+		};
+		396EC374243B5F8100E147BE /* CRDTTests */ = {
+			isa = PBXGroup;
+			children = (
+				396EC377243B5F8100E147BE /* Info.plist */,
+				396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */,
+			);
+			path = CRDTTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,6 +104,23 @@
 			productReference = 396EC365243B5F1C00E147BE /* CRDT */;
 			productType = "com.apple.product-type.tool";
 		};
+		396EC372243B5F8100E147BE /* CRDTTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 396EC378243B5F8100E147BE /* Build configuration list for PBXNativeTarget "CRDTTests" */;
+			buildPhases = (
+				396EC36F243B5F8100E147BE /* Sources */,
+				396EC370243B5F8100E147BE /* Frameworks */,
+				396EC371243B5F8100E147BE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CRDTTests;
+			productName = CRDTTests;
+			productReference = 396EC373243B5F8100E147BE /* CRDTTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -94,6 +133,10 @@
 				TargetAttributes = {
 					396EC364243B5F1C00E147BE = {
 						CreatedOnToolsVersion = 11.3.1;
+					};
+					396EC372243B5F8100E147BE = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -111,9 +154,20 @@
 			projectRoot = "";
 			targets = (
 				396EC364243B5F1C00E147BE /* CRDT */,
+				396EC372243B5F8100E147BE /* CRDTTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		396EC371243B5F8100E147BE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		396EC361243B5F1C00E147BE /* Sources */ = {
@@ -121,6 +175,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				396EC369243B5F1C00E147BE /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		396EC36F243B5F8100E147BE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				396EC37C243B5FC300E147BE /* LWWElementSetTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +320,43 @@
 			};
 			name = Release;
 		};
+		396EC379243B5F8100E147BE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = CRDTTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kenSiu.CRDTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		396EC37A243B5F8100E147BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = CRDTTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kenSiu.CRDTTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -275,6 +374,15 @@
 			buildConfigurations = (
 				396EC36D243B5F1C00E147BE /* Debug */,
 				396EC36E243B5F1C00E147BE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		396EC378243B5F8100E147BE /* Build configuration list for PBXNativeTarget "CRDTTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				396EC379243B5F8100E147BE /* Debug */,
+				396EC37A243B5F8100E147BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
