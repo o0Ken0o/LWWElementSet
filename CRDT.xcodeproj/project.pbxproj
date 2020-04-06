@@ -10,7 +10,19 @@
 		396EC369243B5F1C00E147BE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC368243B5F1C00E147BE /* main.swift */; };
 		396EC37C243B5FC300E147BE /* LWWElementSetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */; };
 		396EC37E243B616E00E147BE /* LWWElementSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37D243B616E00E147BE /* LWWElementSet.swift */; };
+		396EC3CE243B783D00E147BE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC368243B5F1C00E147BE /* main.swift */; };
+		396EC3CF243B784000E147BE /* LWWElementSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37D243B616E00E147BE /* LWWElementSet.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		396EC383243B755100E147BE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 396EC35D243B5F1C00E147BE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 396EC364243B5F1C00E147BE;
+			remoteInfo = CRDT;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		396EC363243B5F1C00E147BE /* CopyFiles */ = {
@@ -118,6 +130,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				396EC384243B755100E147BE /* PBXTargetDependency */,
 			);
 			name = CRDTTests;
 			productName = CRDTTests;
@@ -186,11 +199,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				396EC3CE243B783D00E147BE /* main.swift in Sources */,
 				396EC37C243B5FC300E147BE /* LWWElementSetTest.swift in Sources */,
+				396EC3CF243B784000E147BE /* LWWElementSet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		396EC384243B755100E147BE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 396EC364243B5F1C00E147BE /* CRDT */;
+			targetProxy = 396EC383243B755100E147BE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		396EC36A243B5F1C00E147BE /* Debug */ = {
