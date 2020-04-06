@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		396EC369243B5F1C00E147BE /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC368243B5F1C00E147BE /* main.swift */; };
 		396EC37C243B5FC300E147BE /* LWWElementSetTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */; };
+		396EC37E243B616E00E147BE /* LWWElementSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396EC37D243B616E00E147BE /* LWWElementSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +30,7 @@
 		396EC373243B5F8100E147BE /* CRDTTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CRDTTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		396EC377243B5F8100E147BE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		396EC37B243B5FC300E147BE /* LWWElementSetTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWElementSetTest.swift; sourceTree = "<group>"; };
+		396EC37D243B616E00E147BE /* LWWElementSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LWWElementSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				396EC368243B5F1C00E147BE /* main.swift */,
+				396EC37D243B616E00E147BE /* LWWElementSet.swift */,
 			);
 			path = CRDT;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				396EC37E243B616E00E147BE /* LWWElementSet.swift in Sources */,
 				396EC369243B5F1C00E147BE /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
