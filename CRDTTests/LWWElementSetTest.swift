@@ -22,8 +22,19 @@ class LWWElementSetTest: XCTestCase {
     override func tearDown() {
 		super.tearDown()
     }
+	
+	func testLookup_WithoutTheElement_WithoutRemove() {
+		// 1. Given
+		let target = 1
+		
+		// 2. When
+		let isFound = sut.lookup(target: target)
+		
+		// 3. Then
+		XCTAssertFalse(isFound)
+	}
 
-	func testLookupWithTheElement() {
+	func testLookup_WithTheElement_WithoutRemove() {
 		// 1. Given
 		let target = 1
 		sut.add(newValue: target)
@@ -35,9 +46,24 @@ class LWWElementSetTest: XCTestCase {
 		XCTAssertTrue(isFound)
 	}
 	
-	func testLookupWithoutTheElement() {
+	func testLookup_WithTheElement_WithRemoveLessLatest() {
 		// 1. Given
 		let target = 1
+		sut.remove(oldValue: target)
+		sut.add(newValue: target)
+		
+		// 2. When
+		let isFound = sut.lookup(target: target)
+		
+		// 3. Then
+		XCTAssertTrue(isFound)
+	}
+	
+	func testLookup_WithTheElement_WithRemoveMoreLatest() {
+		// 1. Given
+		let target = 1
+		sut.add(newValue: target)
+		sut.remove(oldValue: target)
 		
 		// 2. When
 		let isFound = sut.lookup(target: target)
@@ -45,5 +71,4 @@ class LWWElementSetTest: XCTestCase {
 		// 3. Then
 		XCTAssertFalse(isFound)
 	}
-
 }
