@@ -101,6 +101,36 @@ class LWWElementSetTest: XCTestCase {
 		// 3. Then
 		XCTAssertTrue(addSetWrapper.set.first?.value == target)
 	}
+	
+	// MARK: - test remove
+	func testRemove_WithoutAddedTarget() {
+		let removeSetWrapper = SetWrapper(set: Set<Record<Int>>())
+		sut = LWWElementSet(removeSetWrapper: removeSetWrapper)
+		
+		// 1. Given
+		let target = 1
+		
+		// 2. When
+		sut.remove(oldValue: target)
+		
+		// 3. Then
+		XCTAssertNil(removeSetWrapper.set.first)
+	}
+	
+	func testRemove_WithAddedTarget() {
+		let removeSetWrapper = SetWrapper(set: Set<Record<Int>>())
+		sut = LWWElementSet(removeSetWrapper: removeSetWrapper)
+		
+		// 1. Given
+		let target = 1
+		
+		// 2. When
+		sut.add(newValue: target)
+		sut.remove(oldValue: target)
+		
+		// 3. Then
+		XCTAssertTrue(removeSetWrapper.set.first?.value == target)
+	}
 }
 
 struct MockTimestampGeneratorAlwaysEqual: TimestampGeneratorProtocol {
