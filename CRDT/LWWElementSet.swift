@@ -11,7 +11,7 @@ import Foundation
 // TODO: add access modifier
 // TODO: add protocols
 
-struct Element<T: Hashable>: Hashable {
+struct Record<T: Hashable>: Hashable {
 	let value: T
 	let timestamp: TimeInterval
 }
@@ -32,11 +32,11 @@ class LWWElementSet<T: Hashable> {
 		case add, remove
 	}
 	
-	private var addSet: Set<Element<T>>
-	private var removeSet: Set<Element<T>>
+	private var addSet: Set<Record<T>>
+	private var removeSet: Set<Record<T>>
 	private let timestampGenerator: TimestampGeneratorProtocol
 	
-	init(addSet: Set<Element<T>> = [], removeSet: Set<Element<T>> = [], timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
+	init(addSet: Set<Record<T>> = [], removeSet: Set<Record<T>> = [], timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
 		self.addSet = addSet
 		self.removeSet = removeSet
 		self.timestampGenerator = timestampGenerator
@@ -50,13 +50,13 @@ class LWWElementSet<T: Hashable> {
 	
 	func add(newValue: T) {
 		let time = timestampGenerator.now()
-		addSet.insert(Element(value: newValue, timestamp: time))
+		addSet.insert(Record(value: newValue, timestamp: time))
 	}
 	
 	func remove(oldValue: T) {
 		guard let _ = getTimestamp(target: oldValue, ops: .add) else { return }
 		let time = timestampGenerator.now()
-		removeSet.insert(Element(value: oldValue, timestamp: time))
+		removeSet.insert(Record(value: oldValue, timestamp: time))
 	}
 	
 	func compare(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> Bool {
@@ -73,13 +73,13 @@ class LWWElementSet<T: Hashable> {
 		let set = ops == .add ? addSet : removeSet
 		var latestTimestamp: TimeInterval?
 		
-		for element in set {
-			if element.value == target {
+		for record in set {
+			if record.value == target {
 				guard let currentFoundTimestamp = latestTimestamp else {
-					latestTimestamp = element.timestamp
+					latestTimestamp = record.timestamp
 					continue
 				}
-				latestTimestamp = max(currentFoundTimestamp , element.timestamp)
+				latestTimestamp = max(currentFoundTimestamp , record.timestamp)
 			}
 		}
 		
