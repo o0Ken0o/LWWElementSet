@@ -16,6 +16,16 @@ struct Element<T: Hashable>: Hashable {
 	let timestamp: TimeInterval
 }
 
+protocol TimestampGeneratorProtocol {
+	func now() -> TimeInterval
+}
+
+struct TimestampGenerator: TimestampGeneratorProtocol {
+	func now() -> TimeInterval {
+		return Date().timeIntervalSince1970
+	}
+}
+
 class LWWElementSet<T: Hashable> {
 	
 	enum Ops: CaseIterable {
@@ -24,10 +34,12 @@ class LWWElementSet<T: Hashable> {
 	
 	private var addSet: Set<Element<T>>
 	private var removeSet: Set<Element<T>>
+	private let timestampGenerator: TimestampGeneratorProtocol
 	
-	init(addSet: Set<Element<T>> = [], removeSet: Set<Element<T>> = []) {
+	init(addSet: Set<Element<T>> = [], removeSet: Set<Element<T>> = [], timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
 		self.addSet = addSet
 		self.removeSet = removeSet
+		self.timestampGenerator = timestampGenerator
 	}
 	
 	func lookup(target: T) -> Bool {
@@ -37,13 +49,13 @@ class LWWElementSet<T: Hashable> {
 	}
 	
 	func add(newValue: T) {
-		let time = Date().timeIntervalSince1970
+		let time = timestampGenerator.now()
 		addSet.insert(Element(value: newValue, timestamp: time))
 	}
 	
 	func remove(oldValue: T) {
 		guard let _ = getTimestamp(target: oldValue, ops: .add) else { return }
-		let time = Date().timeIntervalSince1970
+		let time = timestampGenerator.now()
 		removeSet.insert(Element(value: oldValue, timestamp: time))
 	}
 	

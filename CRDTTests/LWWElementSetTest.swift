@@ -15,7 +15,6 @@ class LWWElementSetTest: XCTestCase {
 
     override func setUp() {
 		super.setUp()
-		
 		sut = LWWElementSet<Int>()
     }
 
@@ -23,6 +22,7 @@ class LWWElementSetTest: XCTestCase {
 		super.tearDown()
     }
 	
+	// MARK: - test lookup
 	func testLookup_WithoutTheElement_WithoutRemove() {
 		// 1. Given
 		let target = 1
@@ -70,5 +70,28 @@ class LWWElementSetTest: XCTestCase {
 		
 		// 3. Then
 		XCTAssertFalse(isFound)
+	}
+	
+	func testLookup_WithTheElement_WithRemove_Equal() {
+		sut = LWWElementSet(timestampGenerator: MockTimestampGeneratorAlwaysEqual())
+		
+		// 1. Given
+		let target = 1
+		sut.add(newValue: target)
+		sut.remove(oldValue: target)
+		
+		// 2. When
+		let isFound = sut.lookup(target: target)
+		
+		// 3. Then
+		XCTAssertTrue(isFound)
+	}
+}
+
+struct MockTimestampGeneratorAlwaysEqual: TimestampGeneratorProtocol {
+	private let date = Date()
+	
+	func now() -> TimeInterval {
+		return date.timeIntervalSince1970
 	}
 }
