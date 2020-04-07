@@ -26,19 +26,28 @@ struct TimestampGenerator: TimestampGeneratorProtocol {
 	}
 }
 
+class SetWrapper<T: Hashable> {
+	
+	var set: Set<T>
+	
+	init(set: Set<T>) {
+		self.set = set
+	}
+}
+
 class LWWElementSet<T: Hashable> {
 	
 	enum Ops: CaseIterable {
 		case add, remove
 	}
 	
-	private var addSet: Set<Record<T>>
-	private var removeSet: Set<Record<T>>
+	private var addSetWrapper: SetWrapper<Record<T>>
+	private var removeSetWrapper: SetWrapper<Record<T>>
 	private let timestampGenerator: TimestampGeneratorProtocol
 	
-	init(addSet: Set<Record<T>> = [], removeSet: Set<Record<T>> = [], timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
-		self.addSet = addSet
-		self.removeSet = removeSet
+	init(addSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()), removeSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()), timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
+		self.addSetWrapper = addSetWrapper
+		self.removeSetWrapper = removeSetWrapper
 		self.timestampGenerator = timestampGenerator
 	}
 	
@@ -50,30 +59,30 @@ class LWWElementSet<T: Hashable> {
 	
 	func add(newValue: T) {
 		let time = timestampGenerator.now()
-		addSet.insert(Record(value: newValue, timestamp: time))
+		addSetWrapper.set.insert(Record(value: newValue, timestamp: time))
 	}
 	
 	func remove(oldValue: T) {
 		guard let _ = getTimestamp(target: oldValue, ops: .add) else { return }
 		let time = timestampGenerator.now()
-		removeSet.insert(Record(value: oldValue, timestamp: time))
+		removeSetWrapper.set.insert(Record(value: oldValue, timestamp: time))
 	}
 	
 	func compare(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> Bool {
-		return lwwSetA.addSet.isSubset(of: lwwSetB.addSet) && lwwSetA.removeSet.isSubset(of: lwwSetB.removeSet)
+		return lwwSetA.addSetWrapper.set.isSubset(of: lwwSetB.addSetWrapper.set) && lwwSetA.removeSetWrapper.set.isSubset(of: lwwSetB.removeSetWrapper.set)
 	}
 	
 	func merge(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> LWWElementSet<T> {
-		let newAddSet = lwwSetA.addSet.union(lwwSetB.addSet)
-		let newRemoveSet = lwwSetA.removeSet.union(lwwSetB.removeSet)
-		return LWWElementSet<T>(addSet: newAddSet, removeSet: newRemoveSet)
+		let newAddSet = lwwSetA.addSetWrapper.set.union(lwwSetB.addSetWrapper.set)
+		let newRemoveSet = lwwSetA.removeSetWrapper.set.union(lwwSetB.removeSetWrapper.set)
+		return LWWElementSet<T>(addSetWrapper: SetWrapper<Record<T>>(set: newAddSet), removeSetWrapper: SetWrapper<Record<T>>(set: newRemoveSet))
 	}
 	
 	private func getTimestamp(target: T, ops: Ops) -> TimeInterval? {
-		let set = ops == .add ? addSet : removeSet
+		let setWrapper = ops == .add ? addSetWrapper : removeSetWrapper
 		var latestTimestamp: TimeInterval?
 		
-		for record in set {
+		for record in setWrapper.set {
 			if record.value == target {
 				guard let currentFoundTimestamp = latestTimestamp else {
 					latestTimestamp = record.timestamp

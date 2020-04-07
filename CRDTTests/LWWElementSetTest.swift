@@ -86,6 +86,21 @@ class LWWElementSetTest: XCTestCase {
 		// 3. Then
 		XCTAssertTrue(isFound)
 	}
+	
+	// MARK: - test add
+	func testAdd() {
+		let addSetWrapper = SetWrapper(set: Set<Record<Int>>())
+		sut = LWWElementSet(addSetWrapper: addSetWrapper)
+		
+		// 1. Given
+		let target = 1
+		
+		// 2. When
+		sut.add(newValue: target)
+		
+		// 3. Then
+		XCTAssertTrue(addSetWrapper.set.first?.value == target)
+	}
 }
 
 struct MockTimestampGeneratorAlwaysEqual: TimestampGeneratorProtocol {
