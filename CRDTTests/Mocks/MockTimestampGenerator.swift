@@ -15,3 +15,14 @@ struct MockTimestampGeneratorAlwaysEqual: TimestampGeneratorProtocol {
 		return date.timeIntervalSince1970
 	}
 }
+
+class MockTimestampGeneratorWithTimestampList: TimestampGeneratorProtocol {
+	private let date = Date()
+	private(set) var timestampList: [TimeInterval] = []
+	
+	func now() -> TimeInterval {
+		let newTimestamp = date.timeIntervalSince1970
+		timestampList.append(newTimestamp)
+		return newTimestamp
+	}
+}

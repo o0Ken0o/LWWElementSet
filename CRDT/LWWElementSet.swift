@@ -8,9 +8,6 @@
 
 import Foundation
 
-// TODO: Check if the size of the set is equal to the array size in unit test
-// TODO: Add Equatable
-
 public struct Record<T: Hashable>: Hashable {
 	let value: T
 	let timestamp: TimeInterval
@@ -106,5 +103,11 @@ public final class LWWElementSet<T: Hashable>: LWWElementSetProtocol {
 		}
 		
 		return latestTimestamp
+	}
+}
+
+extension LWWElementSet: Equatable {
+	public static func == (lhs: LWWElementSet<T>, rhs: LWWElementSet<T>) -> Bool {
+		return lhs.addSetWrapper.set == rhs.addSetWrapper.set && lhs.removeSetWrapper.set == rhs.removeSetWrapper.set
 	}
 }

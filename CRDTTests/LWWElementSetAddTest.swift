@@ -33,6 +33,28 @@ class LWWElementSetAddTest: XCTestCase {
 		sut.add(newValue: target)
 		
 		// 3. Then
+		XCTAssertTrue(addSetWrapper.set.count == 1)
 		XCTAssertTrue(addSetWrapper.set.first?.value == target)
+	}
+	
+	func testAdd_MoreItems() {
+		let mockTimestampGenerator = MockTimestampGeneratorWithTimestampList()
+		let addSetWrapper = SetWrapper(set: Set<Record<Int>>())
+		sut = LWWElementSet(addSetWrapper: addSetWrapper, timestampGenerator: mockTimestampGenerator)
+		var expectedSet = Set<Record<Int>>()
+		
+		for i in 1...10 {
+			// 1. Given
+			// 2. When
+			sut.add(newValue: i)
+			
+			// 3. Then
+			XCTAssertTrue(addSetWrapper.set.count == i)
+			let record = Record<Int>(value: i, timestamp: mockTimestampGenerator.timestampList[i - 1])
+			expectedSet.insert(record)
+		}
+		
+		// 3. Then
+		XCTAssertTrue(addSetWrapper.set == expectedSet)
 	}
 }
