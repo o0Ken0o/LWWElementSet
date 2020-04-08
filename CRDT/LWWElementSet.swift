@@ -10,8 +10,6 @@ import Foundation
 
 // TODO: add access modifier
 // TODO: add protocols
-// TODO: compare -> static
-// TODO: merge -> static
 // TODO: Check if the size of the set is equal to the array size in unit test
 // TODO: Add Equatable
 
@@ -74,12 +72,12 @@ class LWWElementSet<T: Hashable> {
 		removeSetWrapper.set.insert(Record(value: oldValue, timestamp: time))
 	}
 	
-	func compare(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> Bool {
+	static func compare(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> Bool {
 		return lwwSetA.addSetWrapper.set.isSubset(of: lwwSetB.addSetWrapper.set)
 			&& lwwSetA.removeSetWrapper.set.isSubset(of: lwwSetB.removeSetWrapper.set)
 	}
 	
-	func merge(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> LWWElementSet<T> {
+	static func merge(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> LWWElementSet<T> {
 		let newAddSet = lwwSetA.addSetWrapper.set.union(lwwSetB.addSetWrapper.set)
 		let newRemoveSet = lwwSetA.removeSetWrapper.set.union(lwwSetB.removeSetWrapper.set)
 		return LWWElementSet<T>(addSetWrapper: SetWrapper<Record<T>>(set: newAddSet), removeSetWrapper: SetWrapper<Record<T>>(set: newRemoveSet))

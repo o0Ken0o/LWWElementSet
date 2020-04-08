@@ -63,7 +63,7 @@ class LWWElementSetMergeTest: XCTestCase {
 		let lwwSetB = LWWElementSet<Int>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
 		
 		// 2: When
-		let mergedLWWElementSet = sut.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let mergedLWWElementSet = LWWElementSet<Int>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3: Then
 		var mergedAddArray = addArray
@@ -73,8 +73,8 @@ class LWWElementSetMergeTest: XCTestCase {
 		mergedRemoveArray.append(contentsOf: removeArrayA)
 		mergedRemoveArray.append(contentsOf: removeArrayB)
 		let expectedMergedSet = LWWElementSet(addSetWrapper: SetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: SetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
-		let isMergedToExpectedEqual = sut.compare(lwwSetA: mergedLWWElementSet, lwwSetB: expectedMergedSet)
-		let isExpectedToMergedEqual = sut.compare(lwwSetA: expectedMergedSet, lwwSetB: mergedLWWElementSet)
+		let isMergedToExpectedEqual = LWWElementSet<Int>.compare(lwwSetA: mergedLWWElementSet, lwwSetB: expectedMergedSet)
+		let isExpectedToMergedEqual = LWWElementSet<Int>.compare(lwwSetA: expectedMergedSet, lwwSetB: mergedLWWElementSet)
 		XCTAssertTrue(isMergedToExpectedEqual)
 		XCTAssertTrue(isExpectedToMergedEqual)
 	}
@@ -112,7 +112,7 @@ class LWWElementSetMergeTest: XCTestCase {
 		let lwwSetB = LWWElementSet<Int>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
 		
 		// 2: When
-		let mergedLWWElementSet = sut.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let mergedLWWElementSet = LWWElementSet<Int>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3: Then
 		var mergedAddArray = addArrayA
@@ -120,8 +120,8 @@ class LWWElementSetMergeTest: XCTestCase {
 		var mergedRemoveArray = removeArrayA
 		mergedRemoveArray.append(contentsOf: removeArrayB)
 		let expectedMergedSet = LWWElementSet(addSetWrapper: SetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: SetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
-		let isMergedToExpectedEqual = sut.compare(lwwSetA: mergedLWWElementSet, lwwSetB: expectedMergedSet)
-		let isExpectedToMergedEqual = sut.compare(lwwSetA: expectedMergedSet, lwwSetB: mergedLWWElementSet)
+		let isMergedToExpectedEqual = LWWElementSet<Int>.compare(lwwSetA: mergedLWWElementSet, lwwSetB: expectedMergedSet)
+		let isExpectedToMergedEqual = LWWElementSet<Int>.compare(lwwSetA: expectedMergedSet, lwwSetB: mergedLWWElementSet)
 		XCTAssertTrue(isMergedToExpectedEqual)
 		XCTAssertTrue(isExpectedToMergedEqual)
 	}

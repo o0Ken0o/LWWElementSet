@@ -28,7 +28,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		let lwwSetB = LWWElementSet<Int>()
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -42,7 +42,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetA.add(newValue: 1)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -56,7 +56,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 1)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -76,7 +76,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 3)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -95,7 +95,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 3)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -115,7 +115,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 4)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -134,7 +134,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 4)
 		
 		// 2. When
-		let compareResult = sut.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
