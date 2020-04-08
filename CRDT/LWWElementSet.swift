@@ -10,6 +10,10 @@ import Foundation
 
 // TODO: add access modifier
 // TODO: add protocols
+// TODO: compare -> static
+// TODO: merge -> static
+// TODO: break long lines into serveral lines
+// TODO: Check if the size of the set is equal to the array size in unit test
 
 struct Record<T: Hashable>: Hashable {
 	let value: T
