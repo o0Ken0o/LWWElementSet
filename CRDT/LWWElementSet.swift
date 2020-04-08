@@ -8,27 +8,26 @@
 
 import Foundation
 
-// TODO: add access modifier
 // TODO: add protocols
 // TODO: Check if the size of the set is equal to the array size in unit test
 // TODO: Add Equatable
 
-struct Record<T: Hashable>: Hashable {
+public struct Record<T: Hashable>: Hashable {
 	let value: T
 	let timestamp: TimeInterval
 }
 
-protocol TimestampGeneratorProtocol {
+public protocol TimestampGeneratorProtocol {
 	func now() -> TimeInterval
 }
 
-struct TimestampGenerator: TimestampGeneratorProtocol {
-	func now() -> TimeInterval {
+public struct TimestampGenerator: TimestampGeneratorProtocol {
+	public func now() -> TimeInterval {
 		return Date().timeIntervalSince1970
 	}
 }
 
-class SetWrapper<T: Hashable> {
+public final class SetWrapper<T: Hashable> {
 	
 	var set: Set<T>
 	
@@ -37,7 +36,7 @@ class SetWrapper<T: Hashable> {
 	}
 }
 
-class LWWElementSet<T: Hashable> {
+public final class LWWElementSet<T: Hashable> {
 	
 	enum Ops: CaseIterable {
 		case add, remove
