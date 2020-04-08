@@ -22,7 +22,6 @@ class LWWElementSetCompareTest: XCTestCase {
 		super.tearDown()
     }
 	
-	// MARK: - test compare
 	func testCompare_BothEmpty() {
 		// 1. Given
 		let lwwSetA = LWWElementSet<Int>()

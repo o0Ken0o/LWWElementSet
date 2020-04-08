@@ -22,7 +22,6 @@ class LWWElementSetAddTest: XCTestCase {
 		super.tearDown()
     }
 	
-	// MARK: - test add
 	func testAdd() {
 		let addSetWrapper = SetWrapper(set: Set<Record<Int>>())
 		sut = LWWElementSet(addSetWrapper: addSetWrapper)

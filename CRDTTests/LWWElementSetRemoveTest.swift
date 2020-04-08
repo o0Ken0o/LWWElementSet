@@ -22,7 +22,6 @@ class LWWElementSetRemoveTest: XCTestCase {
 		super.tearDown()
     }
 	
-	// MARK: - test remove
 	func testRemove_WithoutAddedTarget() {
 		let removeSetWrapper = SetWrapper(set: Set<Record<Int>>())
 		sut = LWWElementSet(removeSetWrapper: removeSetWrapper)

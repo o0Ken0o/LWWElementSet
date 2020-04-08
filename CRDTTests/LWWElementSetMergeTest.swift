@@ -22,7 +22,6 @@ class LWWElementSetMergeTest: XCTestCase {
 		super.tearDown()
     }
 	
-	// MARK: - test merge
 	func testMerge_TwoABitDifferentSet() {
 		// 1. Given
 		var addArray = [Record<Int>]()
