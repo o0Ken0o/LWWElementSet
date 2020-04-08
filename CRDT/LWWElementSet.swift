@@ -12,8 +12,8 @@ import Foundation
 // TODO: add protocols
 // TODO: compare -> static
 // TODO: merge -> static
-// TODO: break long lines into serveral lines
 // TODO: Check if the size of the set is equal to the array size in unit test
+// TODO: Add Equatable
 
 struct Record<T: Hashable>: Hashable {
 	let value: T
@@ -49,7 +49,9 @@ class LWWElementSet<T: Hashable> {
 	private var removeSetWrapper: SetWrapper<Record<T>>
 	private let timestampGenerator: TimestampGeneratorProtocol
 	
-	init(addSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()), removeSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()), timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
+	init(addSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()),
+		 removeSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()),
+		 timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
 		self.addSetWrapper = addSetWrapper
 		self.removeSetWrapper = removeSetWrapper
 		self.timestampGenerator = timestampGenerator
@@ -73,7 +75,8 @@ class LWWElementSet<T: Hashable> {
 	}
 	
 	func compare(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> Bool {
-		return lwwSetA.addSetWrapper.set.isSubset(of: lwwSetB.addSetWrapper.set) && lwwSetA.removeSetWrapper.set.isSubset(of: lwwSetB.removeSetWrapper.set)
+		return lwwSetA.addSetWrapper.set.isSubset(of: lwwSetB.addSetWrapper.set)
+			&& lwwSetA.removeSetWrapper.set.isSubset(of: lwwSetB.removeSetWrapper.set)
 	}
 	
 	func merge(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> LWWElementSet<T> {
