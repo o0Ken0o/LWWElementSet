@@ -11,11 +11,11 @@ import XCTest
 
 class LWWElementSetMergeTest: XCTestCase {
 	
-	private var sut: LWWElementSet<IntSetWrapper>!
+	private var sut: LWWElementSet<IntRecordSetWrapper>!
 
     override func setUp() {
 		super.setUp()
-		sut = LWWElementSet<IntSetWrapper>()
+		sut = LWWElementSet<IntRecordSetWrapper>()
     }
 
     override func tearDown() {
@@ -32,21 +32,21 @@ class LWWElementSetMergeTest: XCTestCase {
 		
 		let addSetA = Set(addArrayA).union(Set(addArray))
 		let removeSetA = Set(removeArrayA).union(Set(removeArray))
-		let addSetWrapperA = IntSetWrapper(set: addSetA)
-		let removeSetWrapperA = IntSetWrapper(set: removeSetA)
-		let lwwSetA = LWWElementSet<IntSetWrapper>(addSetWrapper: addSetWrapperA, removeSetWrapper: removeSetWrapperA)
+		let addSetWrapperA = IntRecordSetWrapper(set: addSetA)
+		let removeSetWrapperA = IntRecordSetWrapper(set: removeSetA)
+		let lwwSetA = LWWElementSet<IntRecordSetWrapper>(addSetWrapper: addSetWrapperA, removeSetWrapper: removeSetWrapperA)
 		
 		let addArrayB = generateRecordArray(start: 1, end: 10)
 		let removeArrayB = generateRecordArray(start: 1, end: 10)
 		
 		let addSetB = Set(addArrayB).union(Set(addArray))
 		let removeSetB = Set(removeArrayB).union(Set(removeArray))
-		let addSetWrapperB = IntSetWrapper(set: addSetB)
-		let removeSetWrapperB = IntSetWrapper(set: removeSetB)
-		let lwwSetB = LWWElementSet<IntSetWrapper>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
+		let addSetWrapperB = IntRecordSetWrapper(set: addSetB)
+		let removeSetWrapperB = IntRecordSetWrapper(set: removeSetB)
+		let lwwSetB = LWWElementSet<IntRecordSetWrapper>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
 		
 		// 2: When
-		let mergedLWWElementSet = LWWElementSet<IntSetWrapper>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let mergedLWWElementSet = LWWElementSet<IntRecordSetWrapper>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3: Then
 		var mergedAddArray = addArray
@@ -57,7 +57,7 @@ class LWWElementSetMergeTest: XCTestCase {
 		mergedRemoveArray.append(contentsOf: removeArrayA)
 		mergedRemoveArray.append(contentsOf: removeArrayB)
 		
-		let expectedMergedSet = LWWElementSet(addSetWrapper: IntSetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: IntSetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
+		let expectedMergedSet = LWWElementSet(addSetWrapper: IntRecordSetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: IntRecordSetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
 		XCTAssertTrue(mergedLWWElementSet == expectedMergedSet)
 	}
 	
@@ -68,21 +68,21 @@ class LWWElementSetMergeTest: XCTestCase {
 		
 		let addSetA = Set(addArrayA)
 		let removeSetA = Set(removeArrayA)
-		let addSetWrapperA = IntSetWrapper(set: addSetA)
-		let removeSetWrapperA = IntSetWrapper(set: removeSetA)
-		let lwwSetA = LWWElementSet<IntSetWrapper>(addSetWrapper: addSetWrapperA, removeSetWrapper: removeSetWrapperA)
+		let addSetWrapperA = IntRecordSetWrapper(set: addSetA)
+		let removeSetWrapperA = IntRecordSetWrapper(set: removeSetA)
+		let lwwSetA = LWWElementSet<IntRecordSetWrapper>(addSetWrapper: addSetWrapperA, removeSetWrapper: removeSetWrapperA)
 		
 		let addArrayB = generateRecordArray(start: 21, end: 30)
 		let removeArrayB = generateRecordArray(start: 21, end: 30)
 		
 		let addSetB = Set(addArrayB)
 		let removeSetB = Set(removeArrayB)
-		let addSetWrapperB = IntSetWrapper(set: addSetB)
-		let removeSetWrapperB = IntSetWrapper(set: removeSetB)
-		let lwwSetB = LWWElementSet<IntSetWrapper>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
+		let addSetWrapperB = IntRecordSetWrapper(set: addSetB)
+		let removeSetWrapperB = IntRecordSetWrapper(set: removeSetB)
+		let lwwSetB = LWWElementSet<IntRecordSetWrapper>(addSetWrapper: addSetWrapperB, removeSetWrapper: removeSetWrapperB)
 		
 		// 2: When
-		let mergedLWWElementSet = LWWElementSet<IntSetWrapper>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let mergedLWWElementSet = LWWElementSet<IntRecordSetWrapper>.merge(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3: Then
 		var mergedAddArray = addArrayA
@@ -91,7 +91,7 @@ class LWWElementSetMergeTest: XCTestCase {
 		var mergedRemoveArray = removeArrayA
 		mergedRemoveArray.append(contentsOf: removeArrayB)
 		
-		let expectedMergedSet = LWWElementSet(addSetWrapper: IntSetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: IntSetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
+		let expectedMergedSet = LWWElementSet(addSetWrapper: IntRecordSetWrapper(set: Set<Record<Int>>(mergedAddArray)), removeSetWrapper: IntRecordSetWrapper(set:  Set<Record<Int>>(mergedRemoveArray)))
 		XCTAssertTrue(mergedLWWElementSet == expectedMergedSet)
 	}
 	

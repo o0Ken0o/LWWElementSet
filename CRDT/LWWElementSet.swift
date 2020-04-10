@@ -30,7 +30,7 @@ public protocol SetWrapper: AnyObject {
 	init()
 }
 
-public class IntSetWrapper: SetWrapper {
+public class IntRecordSetWrapper: SetWrapper {
 	public typealias SetElement = Int
 	public var set: Set<Record<SetElement>>
 	
@@ -72,29 +72,29 @@ public final class LWWElementSet<T: SetWrapper>: LWWElementSetProtocol {
 	}
 	
 	convenience init() {
-		let addSetWrapper = IntSetWrapper() as! T
-		let removeSetWrapper = IntSetWrapper() as! T
+		let addSetWrapper = IntRecordSetWrapper() as! T
+		let removeSetWrapper = IntRecordSetWrapper() as! T
 		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
 	}
 	
 	convenience init(addSetWrapper: T) {
-		let removeSetWrapper = IntSetWrapper() as! T
+		let removeSetWrapper = IntRecordSetWrapper() as! T
 		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
 	}
 	
 	convenience init(removeSetWrapper: T) {
-		let addSetWrapper = IntSetWrapper() as! T
+		let addSetWrapper = IntRecordSetWrapper() as! T
 		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
 	}
 	
 	convenience init(timestampGenerator: TimestampGeneratorProtocol) {
-		let addSetWrapper = IntSetWrapper() as! T
-		let removeSetWrapper = IntSetWrapper() as! T
+		let addSetWrapper = IntRecordSetWrapper() as! T
+		let removeSetWrapper = IntRecordSetWrapper() as! T
 		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper, timestampGenerator: timestampGenerator)
 	}
 	
 	convenience init(addSetWrapper: T, timestampGenerator: TimestampGeneratorProtocol) {
-		let removeSetWrapper = IntSetWrapper() as! T
+		let removeSetWrapper = IntRecordSetWrapper() as! T
 		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper, timestampGenerator: timestampGenerator)
 	}
 	

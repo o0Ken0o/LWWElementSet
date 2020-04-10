@@ -11,11 +11,11 @@ import XCTest
 
 class LWWElementSetRemoveTest: XCTestCase {
 	
-	private var sut: LWWElementSet<IntSetWrapper>!
+	private var sut: LWWElementSet<IntRecordSetWrapper>!
 
     override func setUp() {
 		super.setUp()
-		sut = LWWElementSet<IntSetWrapper>()
+		sut = LWWElementSet<IntRecordSetWrapper>()
     }
 
     override func tearDown() {
@@ -23,7 +23,7 @@ class LWWElementSetRemoveTest: XCTestCase {
     }
 	
 	func testRemove_WithoutAddedTarget() {
-		let removeSetWrapper = IntSetWrapper()
+		let removeSetWrapper = IntRecordSetWrapper()
 		sut = LWWElementSet(removeSetWrapper: removeSetWrapper)
 		
 		// 1. Given
@@ -37,7 +37,7 @@ class LWWElementSetRemoveTest: XCTestCase {
 	}
 	
 	func testRemove_WithAddedTarget() {
-		let removeSetWrapper = IntSetWrapper()
+		let removeSetWrapper = IntRecordSetWrapper()
 		sut = LWWElementSet(removeSetWrapper: removeSetWrapper)
 		
 		// 1. Given
