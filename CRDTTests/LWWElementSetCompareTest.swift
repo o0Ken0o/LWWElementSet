@@ -11,11 +11,11 @@ import XCTest
 
 class LWWElementSetCompareTest: XCTestCase {
 	
-	private var sut: LWWElementSet<Int>!
+	private var sut: LWWElementSet<IntSetWrapper>!
 
     override func setUp() {
 		super.setUp()
-		sut = LWWElementSet<Int>()
+		sut = LWWElementSet<IntSetWrapper>()
     }
 
     override func tearDown() {
@@ -24,11 +24,11 @@ class LWWElementSetCompareTest: XCTestCase {
 	
 	func testCompare_BothEmpty() {
 		// 1. Given
-		let lwwSetA = LWWElementSet<Int>()
-		let lwwSetB = LWWElementSet<Int>()
+		let lwwSetA = LWWElementSet<IntSetWrapper>()
+		let lwwSetB = LWWElementSet<IntSetWrapper>()
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -37,12 +37,12 @@ class LWWElementSetCompareTest: XCTestCase {
 	
 	func testCompare_ANotEmpty_BEmpty() {
 		// 1. Given
-		let lwwSetA = LWWElementSet<Int>()
-		let lwwSetB = LWWElementSet<Int>()
+		let lwwSetA = LWWElementSet<IntSetWrapper>()
+		let lwwSetB = LWWElementSet<IntSetWrapper>()
 		lwwSetA.add(newValue: 1)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -51,12 +51,12 @@ class LWWElementSetCompareTest: XCTestCase {
 	
 	func testCompare_AEmpty_BNotEmpty() {
 		// 1. Given
-		let lwwSetA = LWWElementSet<Int>()
-		let lwwSetB = LWWElementSet<Int>()
+		let lwwSetA = LWWElementSet<IntSetWrapper>()
+		let lwwSetB = LWWElementSet<IntSetWrapper>()
 		lwwSetB.add(newValue: 1)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -66,8 +66,8 @@ class LWWElementSetCompareTest: XCTestCase {
 	func testCompare_BothNotEmpty_BothAreTheSame_SameTimestamp() {
 		// 1. Given
 		let mockGenerator = MockTimestampGeneratorAlwaysEqual()
-		let lwwSetA = LWWElementSet<Int>(timestampGenerator: mockGenerator)
-		let lwwSetB = LWWElementSet<Int>(timestampGenerator: mockGenerator)
+		let lwwSetA = LWWElementSet<IntSetWrapper>(timestampGenerator: mockGenerator)
+		let lwwSetB = LWWElementSet<IntSetWrapper>(timestampGenerator: mockGenerator)
 		lwwSetA.add(newValue: 1)
 		lwwSetA.add(newValue: 2)
 		lwwSetA.add(newValue: 3)
@@ -76,7 +76,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 3)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = true
@@ -85,8 +85,8 @@ class LWWElementSetCompareTest: XCTestCase {
 	
 	func testCompare_BothNotEmpty_BothAreTheSame_DifferentTimestamp() {
 		// 1. Given
-		let lwwSetA = LWWElementSet<Int>()
-		let lwwSetB = LWWElementSet<Int>()
+		let lwwSetA = LWWElementSet<IntSetWrapper>()
+		let lwwSetB = LWWElementSet<IntSetWrapper>()
 		lwwSetA.add(newValue: 1)
 		lwwSetA.add(newValue: 2)
 		lwwSetA.add(newValue: 3)
@@ -95,7 +95,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 3)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -105,8 +105,8 @@ class LWWElementSetCompareTest: XCTestCase {
 	func testCompare_BothNotEmpty_BothAreDifferent_SameTimestamp() {
 		// 1. Given
 		let mockGenerator = MockTimestampGeneratorAlwaysEqual()
-		let lwwSetA = LWWElementSet<Int>(timestampGenerator: mockGenerator)
-		let lwwSetB = LWWElementSet<Int>(timestampGenerator: mockGenerator)
+		let lwwSetA = LWWElementSet<IntSetWrapper>(timestampGenerator: mockGenerator)
+		let lwwSetB = LWWElementSet<IntSetWrapper>(timestampGenerator: mockGenerator)
 		lwwSetA.add(newValue: 1)
 		lwwSetA.add(newValue: 2)
 		lwwSetA.add(newValue: 3)
@@ -115,7 +115,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 4)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false
@@ -124,8 +124,8 @@ class LWWElementSetCompareTest: XCTestCase {
 	
 	func testCompare_BothNotEmpty_BothAreDifferent_DifferentTimestamp() {
 		// 1. Given
-		let lwwSetA = LWWElementSet<Int>()
-		let lwwSetB = LWWElementSet<Int>()
+		let lwwSetA = LWWElementSet<IntSetWrapper>()
+		let lwwSetB = LWWElementSet<IntSetWrapper>()
 		lwwSetA.add(newValue: 1)
 		lwwSetA.add(newValue: 2)
 		lwwSetA.add(newValue: 3)
@@ -134,7 +134,7 @@ class LWWElementSetCompareTest: XCTestCase {
 		lwwSetB.add(newValue: 4)
 		
 		// 2. When
-		let compareResult = LWWElementSet<Int>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
+		let compareResult = LWWElementSet<IntSetWrapper>.compare(lwwSetA: lwwSetA, lwwSetB: lwwSetB)
 		
 		// 3. Then
 		let expectedResult = false

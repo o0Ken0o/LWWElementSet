@@ -11,11 +11,11 @@ import XCTest
 
 class LWWElementSetLookupTest: XCTestCase {
 	
-	private var sut: LWWElementSet<Int>!
+	private var sut: LWWElementSet<IntSetWrapper>!
 
     override func setUp() {
 		super.setUp()
-		sut = LWWElementSet<Int>()
+		sut = LWWElementSet<IntSetWrapper>()
     }
 
     override func tearDown() {

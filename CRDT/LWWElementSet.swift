@@ -23,11 +23,22 @@ public struct TimestampGenerator: TimestampGeneratorProtocol {
 	}
 }
 
-public final class SetWrapper<T: Hashable> {
+public protocol SetWrapper: AnyObject {
+	associatedtype SetElement: Hashable
+	var set: Set<Record<SetElement>> { get set }
+	init(set: Set<Record<SetElement>>)
+	init()
+}
+
+public class IntSetWrapper: SetWrapper {
+	public typealias SetElement = Int
+	public var set: Set<Record<SetElement>>
 	
-	var set: Set<T>
+	public required init() {
+		set = []
+	}
 	
-	init(set: Set<T>) {
+	public required init(set: Set<Record<Int>>) {
 		self.set = set
 	}
 }
@@ -42,36 +53,63 @@ public protocol LWWElementSetProtocol {
 	static func merge(lwwSetA: Self, lwwSetB: Self) -> Self
 }
 
-public final class LWWElementSet<T: Hashable>: LWWElementSetProtocol {
+public final class LWWElementSet<T: SetWrapper>: LWWElementSetProtocol {
 	
 	enum Ops: CaseIterable {
 		case add, remove
 	}
 	
-	private var addSetWrapper: SetWrapper<Record<T>>
-	private var removeSetWrapper: SetWrapper<Record<T>>
+	private var addSetWrapper: T
+	private var removeSetWrapper: T
 	private let timestampGenerator: TimestampGeneratorProtocol
 	
-	init(addSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()),
-		 removeSetWrapper: SetWrapper<Record<T>> = SetWrapper(set: Set<Record<T>>()),
+	init(addSetWrapper: T,
+		 removeSetWrapper: T,
 		 timestampGenerator: TimestampGeneratorProtocol = TimestampGenerator()) {
 		self.addSetWrapper = addSetWrapper
 		self.removeSetWrapper = removeSetWrapper
 		self.timestampGenerator = timestampGenerator
 	}
 	
-	public func lookup(target: T) -> Bool {
+	convenience init() {
+		let addSetWrapper = IntSetWrapper() as! T
+		let removeSetWrapper = IntSetWrapper() as! T
+		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
+	}
+	
+	convenience init(addSetWrapper: T) {
+		let removeSetWrapper = IntSetWrapper() as! T
+		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
+	}
+	
+	convenience init(removeSetWrapper: T) {
+		let addSetWrapper = IntSetWrapper() as! T
+		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper)
+	}
+	
+	convenience init(timestampGenerator: TimestampGeneratorProtocol) {
+		let addSetWrapper = IntSetWrapper() as! T
+		let removeSetWrapper = IntSetWrapper() as! T
+		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper, timestampGenerator: timestampGenerator)
+	}
+	
+	convenience init(addSetWrapper: T, timestampGenerator: TimestampGeneratorProtocol) {
+		let removeSetWrapper = IntSetWrapper() as! T
+		self.init(addSetWrapper: addSetWrapper, removeSetWrapper: removeSetWrapper, timestampGenerator: timestampGenerator)
+	}
+	
+	public func lookup(target: T.SetElement) -> Bool {
 		guard let addLatestTimestamp = getTimestamp(target: target, ops: .add) else { return false }
 		guard let removeLatestTimestamp = getTimestamp(target: target, ops: .remove) else { return true }
 		return addLatestTimestamp >= removeLatestTimestamp
 	}
 	
-	public func add(newValue: T) {
+	public func add(newValue: T.SetElement) {
 		let time = timestampGenerator.now()
 		addSetWrapper.set.insert(Record(value: newValue, timestamp: time))
 	}
 	
-	public func remove(oldValue: T) {
+	public func remove(oldValue: T.SetElement) {
 		guard let _ = getTimestamp(target: oldValue, ops: .add) else { return }
 		let time = timestampGenerator.now()
 		removeSetWrapper.set.insert(Record(value: oldValue, timestamp: time))
@@ -85,10 +123,11 @@ public final class LWWElementSet<T: Hashable>: LWWElementSetProtocol {
 	public static func merge(lwwSetA: LWWElementSet<T>, lwwSetB: LWWElementSet<T>) -> LWWElementSet<T> {
 		let newAddSet = lwwSetA.addSetWrapper.set.union(lwwSetB.addSetWrapper.set)
 		let newRemoveSet = lwwSetA.removeSetWrapper.set.union(lwwSetB.removeSetWrapper.set)
-		return LWWElementSet<T>(addSetWrapper: SetWrapper<Record<T>>(set: newAddSet), removeSetWrapper: SetWrapper<Record<T>>(set: newRemoveSet))
+		let mergedSet = LWWElementSet(addSetWrapper: T(set: newAddSet), removeSetWrapper: T(set: newRemoveSet))
+		return mergedSet
 	}
 	
-	private func getTimestamp(target: T, ops: Ops) -> TimeInterval? {
+	private func getTimestamp(target: T.SetElement, ops: Ops) -> TimeInterval? {
 		let setWrapper = ops == .add ? addSetWrapper : removeSetWrapper
 		var latestTimestamp: TimeInterval?
 		

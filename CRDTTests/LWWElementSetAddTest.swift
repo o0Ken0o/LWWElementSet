@@ -11,11 +11,11 @@ import XCTest
 
 class LWWElementSetAddTest: XCTestCase {
 	
-	private var sut: LWWElementSet<Int>!
+	private var sut: LWWElementSet<IntSetWrapper>!
 
     override func setUp() {
 		super.setUp()
-		sut = LWWElementSet<Int>()
+		sut = LWWElementSet<IntSetWrapper>()
     }
 
     override func tearDown() {
@@ -23,7 +23,7 @@ class LWWElementSetAddTest: XCTestCase {
     }
 	
 	func testAdd() {
-		let addSetWrapper = SetWrapper(set: Set<Record<Int>>())
+		let addSetWrapper = IntSetWrapper(set: Set<Record<Int>>())
 		sut = LWWElementSet(addSetWrapper: addSetWrapper)
 		
 		// 1. Given
@@ -39,8 +39,8 @@ class LWWElementSetAddTest: XCTestCase {
 	
 	func testAdd_MoreItems() {
 		let mockTimestampGenerator = MockTimestampGeneratorWithTimestampList()
-		let addSetWrapper = SetWrapper(set: Set<Record<Int>>())
-		sut = LWWElementSet(addSetWrapper: addSetWrapper, timestampGenerator: mockTimestampGenerator)
+		let addSetWrapper = IntSetWrapper(set: Set<Record<Int>>())
+		sut = LWWElementSet<IntSetWrapper>(addSetWrapper: addSetWrapper, timestampGenerator: mockTimestampGenerator)
 		var expectedSet = Set<Record<Int>>()
 		
 		for i in 1...10 {
